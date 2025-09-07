@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# === SETUP AWAL ===
+FOLDER="/storage/emulated/0/mlbb"       # folder project
+REPO="https://github.com/Afinnn954/ProjectHookClass.git"  # ganti dengan repo kamu
+
+cd "$FOLDER" || { echo "Folder tidak ditemukan!"; exit 1; }
+
+# === FIX DUBIOUS OWNERSHIP ===
+git config --global --add safe.directory "$FOLDER"
+
+# === INISIALISASI GIT (jika belum) ===
+if [ ! -d ".git" ]; then
+  git init
+  git branch -M main
+  git remote add origin "$REPO"
+else
+  git remote set-url origin "$REPO"
+fi
+
+# === ADD & COMMIT ===
+git add .
+git commit -m "Auto commit: $(date '+%Y-%m-%d %H:%M:%S')"
+
+# === PUSH KE GITHUB ===
+git push -u origin main
